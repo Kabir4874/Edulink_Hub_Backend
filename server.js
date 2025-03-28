@@ -1,8 +1,8 @@
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
+import authRoutes from "./routes/auth.routes.js";
 import { dbConnect } from "./utils/db.js";
-
 dotenv.config();
 
 const app = express();
@@ -16,6 +16,7 @@ dbConnect();
 app.get("/", (req, res) => {
   res.send("Welcome to EduLink Hub API!");
 });
+app.use("/auth", authRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

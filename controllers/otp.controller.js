@@ -1,5 +1,9 @@
+import dotenv from "dotenv";
 import nodemailer from "nodemailer";
 import User from "../models/user.model.js";
+
+dotenv.config();
+
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   service: process.env.SMTP_SERVICE,
