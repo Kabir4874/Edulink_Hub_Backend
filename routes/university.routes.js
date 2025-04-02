@@ -10,16 +10,16 @@ import {
 
 const router = express.Router();
 
-router.post("/create-university", createUniversity);
+router.post("/create", createUniversity);
 
-router.get("/get-university/:id", getUniversityById);
+router.get("/get/:id", getUniversityById);
 
-router.get("/get-all-universities", getAllUniversities);
+router.get("/get-all", getAllUniversities);
 
-router.put("/update-university/:id", updateUniversity);
+router.put("/update/:id", updateUniversity);
 
-router.delete("/delete-university/:id", deleteUniversity);
+router.delete("/delete/:id", deleteUniversity);
 
-router.get("/search-universities/search", searchUniversities);
+router.get("/search", searchUniversities);
 
 export default router;
