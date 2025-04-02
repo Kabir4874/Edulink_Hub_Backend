@@ -23,12 +23,26 @@ const universitySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    applicationDate: {
+      type: Date,
+    },
     applicationDeadline: {
       type: Date,
+    },
+    admitCardDownloadDate: {
+      type: Date,
+    },
+    examUnits: {
+      type: [String],
+    },
+    imageUrl: {
+      type: String,
     },
   },
   { timestamps: true }
 );
+
+universitySchema.index({ name: 1, location: 1 });
 
 const University = mongoose.model("University", universitySchema);
 module.exports = University;
