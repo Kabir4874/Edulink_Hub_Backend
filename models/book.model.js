@@ -25,6 +25,17 @@ const bookSchema = new mongoose.Schema(
       default: Date.now,
     },
     suggestedFor: [String],
+    isPaid: {
+      type: Boolean,
+      default: false,
+    },
+    price: {
+      type: Number,
+      required: function () {
+        return this.isPaid;
+      },
+      min: 0,
+    },
   },
   { timestamps: true }
 );

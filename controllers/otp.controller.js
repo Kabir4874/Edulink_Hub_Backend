@@ -25,7 +25,6 @@ transporter.verify((error, success) => {
 const generateRandomCode = () =>
   Math.floor(100000 + Math.random() * 900000).toString();
 
-//Send Email OTP
 export const sendEmailOtp = async (req, res) => {
   const { email } = req.body;
 
@@ -61,7 +60,6 @@ export const sendEmailOtp = async (req, res) => {
   }
 };
 
-// Verify Email OTP
 export const verifyEmailOtp = async (req, res) => {
   const { email, otp } = req.body;
 
