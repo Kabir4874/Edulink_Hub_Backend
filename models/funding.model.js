@@ -20,6 +20,9 @@ const fundingSchema = new mongoose.Schema(
       required: true,
     },
     eligibilityCriteria: String,
+    applyDate: {
+      type: Date,
+    },
     applicationDeadline: {
       type: Date,
     },

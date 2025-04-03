@@ -32,9 +32,16 @@ const universitySchema = new mongoose.Schema(
     admitCardDownloadDate: {
       type: Date,
     },
-    examUnits: {
-      type: [String],
-    },
+    examUnits: [
+      {
+        unit: {
+          type: String,
+        },
+        date: {
+          type: Date,
+        },
+      },
+    ],
     imageUrl: {
       type: String,
     },
