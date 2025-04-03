@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import Admin from "../models/admin.model.js";
 import User from "../models/user.model.js";
+
 export const register = async (req, res) => {
   const { name, email, password, phoneNumber } = req.body;
   try {
@@ -41,8 +42,23 @@ export const login = async (req, res) => {
     if (!user.emailVerified) {
       return res.status(400).json({ message: "Please verify your email" });
     }
+
+    const currentDate = new Date();
+    const isPremium = user.isPremium && user.premiumExpiresAt > currentDate;
+
+    if (!isPremium) {
+      user.isPremium = false;
+      user.premiumExpiresAt = null;
+      await user.save();
+    }
+
     const token = jwt.sign(
-      { userId: user._id, email: user.email, name: user.name },
+      {
+        userId: user._id,
+        email: user.email,
+        name: user.name,
+        isPremium: user.isPremium,
+      },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );

@@ -20,23 +20,17 @@ const userSchema = new mongoose.Schema(
     phoneNumber: { type: String },
     emailVerified: { type: Boolean, default: false },
     emailVerificationCode: { type: Number },
-    paymentToken: {
-      type: String,
-      default: null,
+    isPremium: {
+      type: Boolean,
+      default: false,
     },
-    queries: [
+    premiumExpiresAt: {
+      type: Date,
+    },
+    purchasedBooks: [
       {
-        question: String,
-        answer: String,
-        status: {
-          type: String,
-          enum: ["pending", "resolved"],
-          default: "pending",
-        },
-        createdAt: {
-          type: Date,
-          default: Date.now,
-        },
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Book",
       },
     ],
   },
