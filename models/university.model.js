@@ -52,4 +52,4 @@ const universitySchema = new mongoose.Schema(
 universitySchema.index({ name: 1, location: 1 });
 
 const University = mongoose.model("University", universitySchema);
-module.exports = University;
+export default University;
