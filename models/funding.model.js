@@ -40,3 +40,4 @@ const fundingSchema = new mongoose.Schema(
 
 const Funding = mongoose.model("Funding", fundingSchema);
 module.exports = Funding;
+export default Funding;
