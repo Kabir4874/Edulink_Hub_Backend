@@ -10,9 +10,6 @@ const notificationSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    link: {
-      type: String,
-    },
     targetAudience: {
       type: String,
       enum: ["all", "undergraduate", "postgraduate", "Ph.D."],

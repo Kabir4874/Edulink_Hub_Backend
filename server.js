@@ -2,6 +2,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import authRoutes from "./routes/auth.routes.js";
+import bookRoutes from "./routes/book.routes.js";
 import universityRoutes from "./routes/university.routes.js";
 import { dbConnect } from "./utils/db.js";
 dotenv.config();
@@ -19,6 +20,7 @@ app.get("/", (req, res) => {
 });
 app.use("/auth", authRoutes);
 app.use("/university", universityRoutes);
+app.use("/book", bookRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
