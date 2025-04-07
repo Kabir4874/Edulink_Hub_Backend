@@ -1,4 +1,5 @@
 import Book from "../models/book.model.js";
+import Review from "../models/review.model.js";
 
 export const createBook = async (req, res) => {
   try {
@@ -107,5 +108,99 @@ export const updateBookById = async (req, res) => {
     res
       .status(500)
       .json({ message: "Error updating book", error: error.message });
+  }
+};
+
+export const addReviewToBook = async (req, res) => {
+  try {
+    const { userId, message } = req.body;
+    const bookId = req.params.id;
+
+    const newReview = new Review({
+      userId,
+      message,
+    });
+
+    await newReview.save();
+
+    const book = await Book.findByIdAndUpdate(
+      bookId,
+      { $push: { reviews: newReview._id } },
+      { new: true }
+    );
+
+    if (!book) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+
+    res.status(201).json(newReview);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error adding review", error: error.message });
+  }
+};
+
+export const getReviewsForBook = async (req, res) => {
+  try {
+    const book = await Book.findById(req.params.id).populate("reviews");
+
+    if (!book) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+
+    res.status(200).json(book.reviews);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error fetching reviews", error: error.message });
+  }
+};
+
+export const updateReviewForBook = async (req, res) => {
+  try {
+    const { message } = req.body;
+    const reviewId = req.params.reviewId;
+
+    const updatedReview = await Review.findByIdAndUpdate(
+      reviewId,
+      { message },
+      { new: true }
+    );
+
+    if (!updatedReview) {
+      return res.status(404).json({ message: "Review not found" });
+    }
+
+    res.status(200).json(updatedReview);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error updating review", error: error.message });
+  }
+};
+
+export const removeReviewFromBook = async (req, res) => {
+  try {
+    const reviewId = req.params.reviewId;
+    const bookId = req.params.id;
+
+    const book = await Book.findByIdAndUpdate(
+      bookId,
+      { $pull: { reviews: reviewId } },
+      { new: true }
+    );
+
+    if (!book) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+
+    await Review.findByIdAndDelete(reviewId);
+
+    res.status(200).json({ message: "Review removed successfully" });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error removing review", error: error.message });
   }
 };

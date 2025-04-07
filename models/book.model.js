@@ -36,6 +36,12 @@ const bookSchema = new mongoose.Schema(
       },
       min: 0,
     },
+    reviews: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Review",
+      },
+    ],
   },
   { timestamps: true }
 );
