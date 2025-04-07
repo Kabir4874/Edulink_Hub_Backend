@@ -1,0 +1,127 @@
+{
+	"info": {
+		"_postman_id": "936ccafd-81e6-40c8-95a4-a15586b7f91a",
+		"name": "EduLink Hub",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "33619963"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Kabir Ahmed Ridoy\",\r\n    \"email\":\"kabir.cse.bd@gmail.com\",\r\n    \"password\":\"asdf\",\r\n    \"phoneNumber\":\"01886807343\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8800/auth/register"
+					},
+					"response": []
+				},
+				{
+					"name": "Send OTP",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"kabir.cse.bd@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8800/auth/send-otp"
+					},
+					"response": []
+				},
+				{
+					"name": "Verify OTP",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"kabir.cse.bd@gmail.com\",\r\n    \"otp\":\"863027\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8800/auth/verify-otp"
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"kabir.cse.bd@gmail.com\",\r\n    \"password\":\"asdf\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://edulink-hub-backend.onrender.com/auth/login"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": []
+		},
+		{
+			"name": "User",
+			"item": []
+		},
+		{
+			"name": "University",
+			"item": [
+				{
+					"name": "Get Universities",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://edulink-hub-backend.onrender.com/university/get-all"
+					},
+					"response": []
+				},
+				{
+					"name": "Get University",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://edulink-hub-backend.onrender.com/university/get/67efdc8697a9b1d190f8b743"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Hello",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8800"
+			},
+			"response": []
+		}
+	]
+}
