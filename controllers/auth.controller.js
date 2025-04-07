@@ -74,7 +74,7 @@ export const login = async (req, res) => {
 };
 
 export const resetPassword = async (req, res) => {
-  const { email, otp, newPassword } = req.body;
+  const { email, newPassword } = req.body;
 
   try {
     const user = await User.findOne({ email });
@@ -84,14 +84,9 @@ export const resetPassword = async (req, res) => {
         .json({ message: "User with this email does not exist" });
     }
 
-    if (user.emailVerificationCode !== otp) {
-      return res.status(400).json({ message: "Invalid OTP" });
-    }
-
     const hashedPassword = await bcrypt.hash(newPassword, 12);
 
     user.password = hashedPassword;
-    user.emailVerificationCode = undefined; // Clear the OTP
 
     await user.save();
 
