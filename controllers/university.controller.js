@@ -15,6 +15,15 @@ export const createUniversity = async (req, res) => {
       imageUrl,
     } = req.body;
 
+    const existingUniversity = await University.findOne({ name });
+
+    if (existingUniversity) {
+      return res.status(400).json({
+        success: false,
+        message: "A university with this name already exists.",
+      });
+    }
+
     const newUniversity = new University({
       name,
       location,
@@ -29,6 +38,7 @@ export const createUniversity = async (req, res) => {
     });
 
     await newUniversity.save();
+
     return res.status(201).json({
       success: true,
       message: "University created successfully.",
