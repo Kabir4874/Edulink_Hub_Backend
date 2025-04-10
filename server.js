@@ -5,6 +5,7 @@ import authRoutes from "./routes/auth.routes.js";
 import bookRoutes from "./routes/book.routes.js";
 import professorRoutes from "./routes/professor.routes.js";
 import universityRoutes from "./routes/university.routes.js";
+import userRoutes from "./routes/user.routes.js";
 import { dbConnect } from "./utils/db.js";
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.use("/auth", authRoutes);
 app.use("/university", universityRoutes);
 app.use("/book", bookRoutes);
 app.use("/professor", professorRoutes);
+app.use("/user", userRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
