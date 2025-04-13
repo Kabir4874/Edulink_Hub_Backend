@@ -146,31 +146,3 @@ export const deleteUniversity = async (req, res) => {
     });
   }
 };
-
-export const searchUniversities = async (req, res) => {
-  try {
-    const { name, location } = req.query;
-    let query = {};
-
-    if (name) {
-      query.name = { $regex: name, $options: "i" };
-    }
-
-    if (location) {
-      query.location = { $regex: location, $options: "i" };
-    }
-
-    const universities = await University.find(query);
-
-    return res.status(200).json({
-      success: true,
-      universities,
-    });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({
-      success: false,
-      message: "Server error.",
-    });
-  }
-};
