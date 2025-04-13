@@ -5,6 +5,7 @@ export const createBook = async (req, res) => {
   try {
     const {
       title,
+      imageUrl,
       author,
       category,
       description,
@@ -22,6 +23,7 @@ export const createBook = async (req, res) => {
 
     const newBook = new Book({
       title,
+      imageUrl,
       author,
       category,
       description,
@@ -42,7 +44,13 @@ export const createBook = async (req, res) => {
 
 export const getAllBooks = async (req, res) => {
   try {
-    const books = await Book.find();
+    const books = await Book.find().populate({
+      path: "reviews",
+      populate: {
+        path: "userId",
+        select: "name",
+      },
+    });
     res.status(200).json(books);
   } catch (error) {
     res
