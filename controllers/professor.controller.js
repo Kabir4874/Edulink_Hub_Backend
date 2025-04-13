@@ -9,6 +9,7 @@ export const createProfessor = async (req, res) => {
       researchInterests,
       contactInfo,
       availability,
+      imageUrl,
       profileLink,
     } = req.body;
 
@@ -26,6 +27,7 @@ export const createProfessor = async (req, res) => {
       name,
       university,
       department,
+      imageUrl,
       researchInterests,
       contactInfo,
       availability,
@@ -75,6 +77,7 @@ export const updateProfessorById = async (req, res) => {
       department,
       researchInterests,
       contactInfo,
+      imageUrl,
       availability,
       profileLink,
     } = req.body;
@@ -85,6 +88,7 @@ export const updateProfessorById = async (req, res) => {
         name,
         university,
         department,
+        imageUrl,
         researchInterests,
         contactInfo,
         availability,
