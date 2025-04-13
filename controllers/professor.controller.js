@@ -12,6 +12,16 @@ export const createProfessor = async (req, res) => {
       profileLink,
     } = req.body;
 
+    const existingProfessor = await Professor.findOne({
+      "contactInfo.email": contactInfo.email,
+    });
+
+    if (existingProfessor) {
+      return res.status(400).json({
+        message: "Professor with this email already exists.",
+      });
+    }
+
     const newProfessor = new Professor({
       name,
       university,
@@ -25,9 +35,10 @@ export const createProfessor = async (req, res) => {
     await newProfessor.save();
     res.status(201).json(newProfessor);
   } catch (error) {
-    res
-      .status(400)
-      .json({ message: "Error creating professor", error: error.message });
+    res.status(400).json({
+      message: "Error creating professor",
+      error: error.message,
+    });
   }
 };
 
