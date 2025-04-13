@@ -12,7 +12,7 @@ const bookSchema = new mongoose.Schema(
     },
     category: {
       type: String,
-      enum: ["admission", "job exam", "skill-based"],
+      enum: ["Admission", "Job Exam", "Skill-Based"],
       required: true,
     },
     description: String,
