@@ -1,3 +1,4 @@
+import dotenv from "dotenv";
 import Stripe from "stripe";
 import Payment from "../models/payment.model.js";
 import User from "../models/user.model.js";
