@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import express from "express";
 import authRoutes from "./routes/auth.routes.js";
 import bookRoutes from "./routes/book.routes.js";
+import fundingRoutes from "./routes/funding.routes.js";
 import professorRoutes from "./routes/professor.routes.js";
 import universityRoutes from "./routes/university.routes.js";
 import userRoutes from "./routes/user.routes.js";
@@ -25,6 +26,7 @@ app.use("/university", universityRoutes);
 app.use("/book", bookRoutes);
 app.use("/professor", professorRoutes);
 app.use("/user", userRoutes);
+app.use("/funding", fundingRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

@@ -9,7 +9,6 @@ export const createProfessor = async (req, res) => {
       researchInterests,
       contactInfo,
       availability,
-      fundingOpportunities,
       profileLink,
     } = req.body;
 
@@ -20,7 +19,6 @@ export const createProfessor = async (req, res) => {
       researchInterests,
       contactInfo,
       availability,
-      fundingOpportunities,
       profileLink,
     });
 
@@ -28,16 +26,14 @@ export const createProfessor = async (req, res) => {
     res.status(201).json(newProfessor);
   } catch (error) {
     res
-      .status(500)
+      .status(400)
       .json({ message: "Error creating professor", error: error.message });
   }
 };
 
 export const getAllProfessors = async (req, res) => {
   try {
-    const professors = await Professor.find()
-      .populate("university", "name")
-      .populate("fundingOpportunities", "title");
+    const professors = await Professor.find();
     res.status(200).json(professors);
   } catch (error) {
     res
@@ -48,10 +44,7 @@ export const getAllProfessors = async (req, res) => {
 
 export const getProfessorById = async (req, res) => {
   try {
-    const professor = await Professor.findById(req.params.id)
-      .populate("university", "name")
-      .populate("fundingOpportunities", "title");
-
+    const professor = await Professor.findById(req.params.id);
     if (!professor) {
       return res.status(404).json({ message: "Professor not found" });
     }
@@ -72,7 +65,6 @@ export const updateProfessorById = async (req, res) => {
       researchInterests,
       contactInfo,
       availability,
-      fundingOpportunities,
       profileLink,
     } = req.body;
 
@@ -85,7 +77,6 @@ export const updateProfessorById = async (req, res) => {
         researchInterests,
         contactInfo,
         availability,
-        fundingOpportunities,
         profileLink,
       },
       { new: true }
@@ -98,7 +89,21 @@ export const updateProfessorById = async (req, res) => {
     res.status(200).json(updatedProfessor);
   } catch (error) {
     res
-      .status(500)
+      .status(400)
       .json({ message: "Error updating professor", error: error.message });
+  }
+};
+
+export const deleteProfessorById = async (req, res) => {
+  try {
+    const professor = await Professor.findByIdAndDelete(req.params.id);
+    if (!professor) {
+      return res.status(404).json({ message: "Professor not found" });
+    }
+    res.status(200).json({ message: "Professor deleted successfully" });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error deleting professor", error: error.message });
   }
 };

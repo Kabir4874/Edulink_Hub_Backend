@@ -7,8 +7,7 @@ const professorSchema = new mongoose.Schema(
       required: true,
     },
     university: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "University",
+      type: String,
       required: true,
     },
     department: {
@@ -31,12 +30,6 @@ const professorSchema = new mongoose.Schema(
       enum: ["available", "not available"],
       default: "available",
     },
-    fundingOpportunities: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Funding",
-      },
-    ],
     profileLink: {
       type: String,
     },

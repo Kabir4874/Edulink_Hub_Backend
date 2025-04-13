@@ -4,7 +4,7 @@ const fundingSchema = new mongoose.Schema(
   {
     type: {
       type: String,
-      enum: ["scholarship", "grant", "professor"],
+      enum: ["scholarship", "professor"],
       required: true,
     },
     title: {
@@ -27,8 +27,10 @@ const fundingSchema = new mongoose.Schema(
       type: Date,
     },
     university: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "University",
+      type: String,
+    },
+    department: {
+      type: String,
     },
     professor: {
       type: mongoose.Schema.Types.ObjectId,
@@ -39,5 +41,4 @@ const fundingSchema = new mongoose.Schema(
 );
 
 const Funding = mongoose.model("Funding", fundingSchema);
-module.exports = Funding;
 export default Funding;
