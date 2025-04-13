@@ -4,7 +4,6 @@ import {
   deleteUniversity,
   getAllUniversities,
   getUniversityById,
-  searchUniversities,
   updateUniversity,
 } from "../controllers/university.controller.js";
 
@@ -19,7 +18,5 @@ router.get("/get-all", getAllUniversities);
 router.put("/update/:id", updateUniversity);
 
 router.delete("/delete/:id", deleteUniversity);
-
-router.get("/search", searchUniversities);
 
 export default router;
