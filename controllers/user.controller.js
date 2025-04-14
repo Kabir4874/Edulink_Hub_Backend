@@ -82,7 +82,10 @@ export const updateUserPremiumStatus = async (req, res) => {
 
     const updatedUser = await User.findByIdAndUpdate(
       userId,
-      { isPremium },
+      {
+        isPremium,
+        premiumExpiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+      },
       { new: true }
     );
 
