@@ -119,6 +119,16 @@ export const updateBookById = async (req, res) => {
   }
 };
 
+export const deleteBookById = async (req, res) => {
+  try {
+    await Book.findByIdAndDelete(req.params.id);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error deleting book", error: error.message });
+  }
+};
+
 export const addReviewToBook = async (req, res) => {
   try {
     const { userId, message } = req.body;
