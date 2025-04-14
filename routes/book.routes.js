@@ -2,6 +2,7 @@ import express from "express";
 import {
   addReviewToBook,
   createBook,
+  deleteBookById,
   getAllBooks,
   getBookById,
   getReviewsForBook,
@@ -19,6 +20,8 @@ router.get("/get-all", getAllBooks);
 router.get("/get/:id", getBookById);
 
 router.put("/update/:id", updateBookById);
+
+router.delete("/delete/:id", deleteBookById);
 
 router.post("/:id/review", addReviewToBook);
 
