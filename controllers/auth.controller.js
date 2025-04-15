@@ -7,8 +7,15 @@ export const register = async (req, res) => {
   const { name, email, password, phoneNumber } = req.body;
   try {
     const userExists = await User.findOne({ email });
+
     if (userExists) {
-      return res.status(400).json({ message: "User already exists" });
+      if (!userExists.emailVerified) {
+        await User.deleteOne({ email });
+      } else {
+        return res
+          .status(400)
+          .json({ message: "User already exists and is verified" });
+      }
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
@@ -17,10 +24,11 @@ export const register = async (req, res) => {
       email,
       password: hashedPassword,
       phoneNumber,
+      emailVerified: false,
     });
     await newUser.save();
     res.status(201).json({
-      message: "User registered successfully",
+      message: "User registered successfully. Please verify your email.",
     });
   } catch (error) {
     console.error(error);
