@@ -23,14 +23,10 @@ export const createFunding = async (req, res) => {
       eligibilityCriteria,
       applyDate,
       applicationDeadline,
+      university,
+      department,
+      professor,
     };
-
-    if (professor) {
-      fundingData.professor = professor;
-    } else {
-      fundingData.university = university;
-      fundingData.department = department;
-    }
 
     const funding = new Funding(fundingData);
     await funding.save();
