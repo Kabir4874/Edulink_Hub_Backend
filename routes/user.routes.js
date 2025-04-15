@@ -21,7 +21,7 @@ router.put("/update-premium/:id", updateUserPremiumStatus);
 
 router.delete("/delete/:id", deleteUserById);
 
-router.post("/users/:userId/books/:bookId/purchase", purchaseBook);
+router.post("/:userId/books/:bookId/purchase", purchaseBook);
 
 router.get("/:userId/books/:bookId/check", checkIfBookPurchased);
 
