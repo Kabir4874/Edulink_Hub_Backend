@@ -3,6 +3,7 @@ import {
   checkIfBookPurchased,
   deleteUserById,
   getAllUsers,
+  getAppStatistics,
   getUserById,
   purchaseBook,
   updateUserById,
@@ -25,4 +26,5 @@ router.post("/:userId/books/:bookId/purchase", purchaseBook);
 
 router.get("/:userId/books/:bookId/check", checkIfBookPurchased);
 
+router.get("/statistics", getAppStatistics);
 export default router;

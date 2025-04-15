@@ -1,5 +1,7 @@
 import jwt from "jsonwebtoken";
 import Book from "../models/book.model.js";
+import Professor from "../models/professor.model.js";
+import University from "../models/university.model.js";
 import User from "../models/user.model.js";
 
 export const getAllUsers = async (req, res) => {
@@ -33,11 +35,11 @@ export const getUserById = async (req, res) => {
 export const updateUserById = async (req, res) => {
   try {
     const userId = req.params.id;
-    const { name, email, address, phoneNumber, profilePicture } = req.body;
+    const { name, address, phoneNumber, profilePicture } = req.body;
 
     const updatedUser = await User.findByIdAndUpdate(
       userId,
-      { name, email, address, phoneNumber, profilePicture },
+      { name, address, phoneNumber, profilePicture },
       { new: true }
     );
 
@@ -157,6 +159,72 @@ export const checkIfBookPurchased = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       message: "Error checking book purchase status",
+      error: error.message,
+    });
+  }
+};
+
+export const getAppStatistics = async (req, res) => {
+  try {
+    const totalUsers = await User.countDocuments();
+
+    const totalBooksPurchased = await User.aggregate([
+      { $unwind: "$purchasedBooks" },
+      { $group: { _id: null, totalBooks: { $sum: 1 } } },
+    ]);
+
+    const totalPremiumRevenue = await User.aggregate([
+      { $match: { isPremium: true } },
+      { $count: "premiumUsers" },
+    ]);
+
+    const premiumRevenue = totalPremiumRevenue.length
+      ? totalPremiumRevenue[0].premiumUsers * 20
+      : 0;
+
+    const totalSellingRevenue = await User.aggregate([
+      { $unwind: "$purchasedBooks" },
+      {
+        $lookup: {
+          from: "books", // The name of the book collection
+          localField: "purchasedBooks", // The field in the User collection
+          foreignField: "_id", // The field in the Book collection
+          as: "bookDetails", // The new field to store book details
+        },
+      },
+      { $unwind: "$bookDetails" },
+      {
+        $group: {
+          _id: null,
+          totalRevenue: { $sum: "$bookDetails.price" }, // Assuming the price field exists in your Book model
+        },
+      },
+    ]);
+    const sellingRevenue = totalSellingRevenue.length
+      ? totalSellingRevenue[0].totalRevenue
+      : 0;
+
+    const totalProfessors = await Professor.countDocuments();
+
+    const totalFunding = await Book.countDocuments();
+
+    const totalUniversities = await University.countDocuments();
+
+    const totalBooks = await Book.countDocuments();
+
+    return res.status(200).json({
+      totalUsers,
+      totalBooksPurchased: totalBooksPurchased[0]?.totalBooks || 0,
+      premiumRevenue,
+      sellingRevenue,
+      totalProfessors,
+      totalFunding,
+      totalUniversities,
+      totalBooks,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error fetching application statistics",
       error: error.message,
     });
   }
