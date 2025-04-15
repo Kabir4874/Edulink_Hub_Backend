@@ -143,27 +143,19 @@ export const checkIfBookPurchased = async (req, res) => {
   try {
     const { userId, bookId } = req.params;
 
-    const user = await User.findById(userId);
+    const user = await User.findById(userId).populate("purchasedBooks");
+
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const book = await Book.findById(bookId);
-    if (!book) {
-      return res.status(404).json({ message: "Book not found" });
-    }
+    const bookPurchased = user.purchasedBooks.some(
+      (book) => book._id.toString() === bookId
+    );
 
-    const isPurchased = user.purchasedBooks.includes(bookId);
-
-    if (isPurchased) {
-      return res.status(200).json({ message: "Book is purchased by the user" });
-    } else {
-      return res
-        .status(404)
-        .json({ message: "Book is not purchased by the user" });
-    }
+    return res.status(200).json({ isPurchased: bookPurchased });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       message: "Error checking book purchase status",
       error: error.message,
     });
