@@ -9,14 +9,6 @@ const professorSchema = new mongoose.Schema(
     imageUrl: {
       type: String,
     },
-    university: {
-      type: String,
-      required: true,
-    },
-    department: {
-      type: String,
-      required: true,
-    },
     researchInterests: {
       type: [String],
       required: true,

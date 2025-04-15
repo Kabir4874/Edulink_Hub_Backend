@@ -4,8 +4,6 @@ export const createProfessor = async (req, res) => {
   try {
     const {
       name,
-      university,
-      department,
       researchInterests,
       contactInfo,
       availability,
@@ -25,8 +23,6 @@ export const createProfessor = async (req, res) => {
 
     const newProfessor = new Professor({
       name,
-      university,
-      department,
       imageUrl,
       researchInterests,
       contactInfo,
@@ -73,8 +69,6 @@ export const updateProfessorById = async (req, res) => {
   try {
     const {
       name,
-      university,
-      department,
       researchInterests,
       contactInfo,
       imageUrl,
@@ -86,8 +80,6 @@ export const updateProfessorById = async (req, res) => {
       req.params.id,
       {
         name,
-        university,
-        department,
         imageUrl,
         researchInterests,
         contactInfo,

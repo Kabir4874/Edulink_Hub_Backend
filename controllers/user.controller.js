@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import Book from "../models/book.model.js";
 import User from "../models/user.model.js";
 
 export const getAllUsers = async (req, res) => {
@@ -106,6 +107,64 @@ export const updateUserPremiumStatus = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       message: "Error updating user premium status",
+      error: error.message,
+    });
+  }
+};
+
+export const purchaseBook = async (req, res) => {
+  try {
+    const { userId, bookId } = req.params;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const book = await Book.findById(bookId);
+    if (!book) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+
+    if (!user.purchasedBooks.includes(bookId)) {
+      user.purchasedBooks.push(bookId);
+      await user.save();
+    }
+
+    return res.status(200).json({ message: "Book purchased successfully" });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error purchasing book", error: error.message });
+  }
+};
+
+export const checkIfBookPurchased = async (req, res) => {
+  try {
+    const { userId, bookId } = req.params;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const book = await Book.findById(bookId);
+    if (!book) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+
+    const isPurchased = user.purchasedBooks.includes(bookId);
+
+    if (isPurchased) {
+      return res.status(200).json({ message: "Book is purchased by the user" });
+    } else {
+      return res
+        .status(404)
+        .json({ message: "Book is not purchased by the user" });
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: "Error checking book purchase status",
       error: error.message,
     });
   }
